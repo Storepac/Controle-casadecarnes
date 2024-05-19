@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela Editável</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="export-to-pdf">
+    <header>
+        <nav>
+           <div class="nab-bar">
+            <h1>Tabela Editável</h1>
+           </div>
+           <div class="nab-bar">
+            <button onclick="logout()">Sair</button>
+           </div>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <div class="inputs">
+            <div class="itens">
+                <label for="peso">Peso da Peça</label>
+                <input type="number" name="peso" id="peso" step="0.01" oninput="updateTable()">
+                <label for="custo_bruto">Custo Bruto da Compra</label>
+                <input type="number" name="custo_bruto" id="custo_bruto" step="0.01">
+            </div>
+            <br>
+            <div class="itens">
+                <label for="custo_extra">Custo de +30% Extra</label>
+                <input type="number" name="custo_extra" id="custo_extra" step="0.01" oninput="calculateCustoPeca()">
+                <label for="custo_peca">Custo Peça</label>
+                <input type="number" name="custo_peca" id="custo_peca" readonly>
+            </div>
+        </div>
+
+        <button onclick="addRow()">Adicionar Linha</button>
+
+        <table id="editableTable">
+            <thead>
+                <tr>
+                    <th>Cortes Venda</th>
+                    <th>Peso</th>
+                    <th>% no Peso</th>
+                    <th>Margem Bruta (%)</th>
+                    <th>Preço Venda</th>
+                    <th>Total</th>
+                    <th>% no Valor Venda</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Rows will be added here -->
+                    </tbody>
+        </table>
+        
+    <div class="inputs">
+        <div class="itens">
+            <label for="totalPeso" class="sum-div">Total Peso:</label>
+            <div id="totalPeso" class="sum-div">0</div>
+        </div>
+            <div class="itens">
+            <label for="totalPercent" class="sum-div">Total % no Peso:</label>
+            <div id="totalPercent" class="sum-div">0</div>
+        </div>
+            
+    </div>
+
+        <div class="inputs">
+           <div class="itens">
+                <label for="total">Total</label>
+                <input type="number" name="total" id="total" readonly>
+            </div>
+            <div  class="itens">
+                <label for="diferenca">Diferença: compra/venda</label>
+                <input type="number" name="diferenca" id="diferenca" readonly>
+            </div>
+            <div  class="itens">
+                <label for="lucro_bruto">Lucro Bruto (%)</label>
+                <input type="number" name="lucro_bruto" id="lucro_bruto" readonly>
+           </div>
+        </div>
+    </div>
+    <footer>
+        <p>Produzido por T4W &copy; <span id="currentYear"></span></p>
+    </footer>
+                    
+    <script src="js/main.js"></script>
+ 
+    <script>
+        // Define o ano atual no footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+        
+</html>
