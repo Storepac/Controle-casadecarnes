@@ -10,16 +10,38 @@
 <body class="export-to-pdf">
     <header>
         <nav>
-           <div class="nab-bar">
-            <h1>Tabela Editável</h1>
-           </div>
-           <div class="nab-bar">
-            <button onclick="logout()">Sair</button>
-           </div>
+            <div class="nav-bar">
+                <h1>Tabela Editável</h1>
+            </div>
+
+            <div class="nav-bar">
+                <button onclick="toggleDarkMode()" class="dark-mode-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+                      </svg>
+
+                      Escuro
+                </button>
+            </div>
+            <div class="nav-bar">
+                <button onclick="logout()" class="logout-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
+                      </svg>
+                      
+                    Sair
+                </button>
+            </div>
         </nav>
+        
+        
+        
     </header>
 
     <div class="container">
+        <div class="inputs">
+            <h1>Controle de Carnes</h1>
+        </div>
 
         <div class="inputs">
             <div class="itens">
@@ -37,7 +59,7 @@
             </div>
         </div>
 
-        <button onclick="addRow()">Adicionar Linha</button>
+
 
         <table id="editableTable">
             <thead>
@@ -49,24 +71,24 @@
                     <th>Preço Venda (R$)</th>
                     <th>Total</th>
                     <th>% no Valor Venda</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <!-- Rows will be added here -->
-                    </tbody>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be added here -->
+            </tbody>
         </table>
+        <button onclick="addRow()">Adicionar Linha</button>
         
-    <div class="inputs descricao">
-        <div class="itens">
-            <label for="totalPeso" class="sum-div">Total Peso:</label>
-            <div id="totalPeso" class="sum-div">0</div>
-        </div>
+        <div class="inputs descricao">
             <div class="itens">
-            <label for="totalPercent" class="sum-div">Total % no Peso:</label>
-            <div id="totalPercent" class="sum-div">0</div>
+                <label for="totalPeso" class="sum-div">Total Peso:</label>
+                <div id="totalPeso" class="sum-div">0</div>
+            </div>
+            <div class="itens">
+                <label for="totalPercent" class="sum-div">Total % no Peso:</label>
+                <div id="totalPercent" class="sum-div">0</div>
+            </div>
         </div>
-            
-    </div>
 
         <div class="inputs">
            <div class="itens">
@@ -82,11 +104,25 @@
                 <input type="number" name="lucro_bruto" id="lucro_bruto" readonly>
            </div>
         </div>
+
+        <div class="inputs">
+            <div class="itens btn-excel"> <!-- Botão para gerar relatório -->
+                <button id="downloadExcelButton" onclick="exportToExcel()">Download Relatório Excel</button>
+            </div>
+            <div class="itens ">
+                <button id="downloadJsonButton" onclick="exportToJson()">Download Relatório JSON</button>
+            </div>
+
+        </div>
+
+
     </div>
     <footer>
         <p>Produzido por T4W &copy; <span id="currentYear"></span></p>
     </footer>
                     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    
     <script src="js/main.js"></script>
  
     <script>
@@ -94,5 +130,4 @@
         document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
 </body>
-        
 </html>

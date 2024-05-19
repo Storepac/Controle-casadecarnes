@@ -17,28 +17,62 @@ body.index-page {
     align-items: flex-start;
     height: auto;
 }
-nav{
+
+
+
+/* Estilos para o nav */
+nav {
     width: 100%;
-    max-width: 300px;
-    display: flex;
+    max-width: 800px;
     margin: 0 auto;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.nab-bar{
-    margin: 0 auto;
+
+.nav-bar {
     display: flex;
+    justify-content:center ;
+    margin: 0 auto;
     align-items: center;
     padding: 0 20px;
 }
-.nab-bar h1{
-    font-size: 1.3rem;
+
+.nav-bar  button {
+    width: 100%;
+    max-width: 150px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
 }
+
+.nav-bar button:hover {
+    background-color: rgba(51, 51, 51, 0.979);
+}
+
+.nav-bar .logout-btn:hover{
+    background-color: brown;
+}
+
+.nav-bar svg {
+    width: 20px;
+    height: auto;
+    margin: 0 10px;
+}
+
+
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
+    height: 70px;
     width: 100%;
     position: fixed;
     top: 0;
@@ -46,23 +80,6 @@ header {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-header h1 {
-    margin: 0;
-}
-
-header button {
-    background-color: #ff4c4c;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-header button:hover {
-    background-color: #d43f3f;
-}
 /* Estilos da página de login */
 .login-container {
     display: flex;
@@ -145,12 +162,15 @@ button:hover {
 }
 .inputs {
     display: flex;
-    margin-top: 20px;
+    margin-top: 10px;
     justify-content: center;
-    padding: 10px;
+    padding: 5px;
 }
 .inputs .itens{
     padding: 0 10px;
+}
+.btn-excel button{
+    background-color: #124622;
 }
 .inputs input[type="number"] {
     -moz-appearance: textfield; /* Remove a seta de incremento/decremento em navegadores Firefox */
@@ -193,6 +213,7 @@ button {
     cursor: pointer;
     transition: background-color 0.3s;
     width: 100%;
+    border: none;
 }
 
 button:hover {
@@ -303,4 +324,68 @@ footer {
     header, footer {
         padding: 15px 0;
     }
+}
+
+
+/* Estilos para o Modo Escuro */
+.dark-mode {
+    background-color: #222;
+}
+
+.dark-mode header {
+    background-color: #444;
+    color: #fff;
+}
+
+.dark-mode .container {
+    background-color: #333;
+    border-color: #555;
+}
+
+.dark-mode table {
+    background-color: #444;
+    border-color: #555;
+}
+
+.dark-mode th {
+    background-color: #555;
+    color: #fff;
+}
+
+.dark-mode td {
+    background-color: #666;
+    color: #fff;
+}
+
+.dark-mode .sum-div {
+    background-color: #555;
+    color: #fff;
+}
+
+.dark-mode footer {
+    background-color: #111;
+    color: #fff;
+}
+
+/* Estilos para o tema escuro */
+.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+
+.dark-mode nav .nav-bar h1 {
+    color: #fff;
+}
+
+.dark-mode nav .nav-bar button {
+    background-color: #555;
+}
+
+.dark-mode nav .nav-bar button:hover {
+    background-color: #cecece;
+    color: #111;
+}
+.dark-mode .nav-bar .logout-btn:hover{
+    background-color: brown;
+    color: #fff;
 }
