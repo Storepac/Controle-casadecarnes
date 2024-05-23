@@ -1,7 +1,8 @@
 /* main.css */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Lato', sans-serif;
     background-color: #f3f4f6;
     color: #333;
     margin: 0;
@@ -57,7 +58,7 @@ nav {
 }
 
 .nav-bar .logout-btn:hover{
-    background-color: brown;
+    background-color: rgb(216, 54, 54);
 }
 
 .nav-bar svg {
@@ -143,7 +144,7 @@ button:hover {
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 900px;
     width: 100%;
     height: 100%;
     padding: 20px;
@@ -160,18 +161,20 @@ button:hover {
     padding: 0 !important;
     font-size: .8em;
 }
-.inputs {
+
+.row{
     display: flex;
-    margin-top: 10px;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
     justify-content: center;
-    padding: 5px;
+    align-items: center;
 }
-.inputs .itens{
-    padding: 0 10px;
+
+.itens-row{
+padding: 0 10px;
 }
-.btn-excel button{
-    background-color: #124622;
-}
+
 .inputs input[type="number"] {
     -moz-appearance: textfield; /* Remove a seta de incremento/decremento em navegadores Firefox */
 }
@@ -189,8 +192,8 @@ div, label, input, button, table {
 }
 
 label {
-    display: block;
     font-weight: bold;
+    font-size: 0.8em;
     margin-bottom: 5px;
     color: #555;
 }
@@ -218,12 +221,14 @@ button {
 
 button:hover {
     background-color: #015501;
+    transition: all 700ms ease;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     background-color: #fff;
+    font-size: 1rem;
 }
 
 th, td {
@@ -235,14 +240,13 @@ th, td {
 th {
     background-color: #007bff;
     color: #fff;
-    font-size: 1em;
 }
 
 td input {
-    border: 1px solid #ccc;
+    border: 1px solid #dddddd;
     border-radius: 5px;
     padding: 5px;
-    width: calc(100% - 12px);
+    width: calc(100% - 1rem);
 }
 
 .sum-div {

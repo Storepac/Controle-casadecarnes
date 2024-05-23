@@ -6,6 +6,9 @@
     <title>Tabela Editável</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css">
+    
+
 </head>
 <body class="export-to-pdf">
     <header>
@@ -39,37 +42,46 @@
     </header>
 
     <div class="container">
-        <div class="inputs">
-            <h1>Controle de Carnes</h1>
+        <div class="row">
+            <h1>Controle de Cortes de Carnes</h1>
         </div>
 
-        <div class="inputs">
-            <div class="itens">
-                <label for="peso">Peso da Peça (Kg)</label>
-                <input type="number" name="peso" id="peso" step="0.01" oninput="updateTable()">
-                <label for="custo_bruto">Custo Bruto da Compra (R$)</label>
-                <input type="number" name="custo_bruto" id="custo_bruto" step="0.01">
+        <div  class="row">
+            <div class="itens-row">
+                <div>
+                    <label for="peso">Peso da Peça (Kg)</label>
+                    <input type="number" name="peso" id="peso" step="0.01" oninput="updateTable()">
+                </div>
+                <div>
+                    <label for="custo_bruto">Custo Bruto da Compra (R$)</label>
+                    <input type="number" name="custo_bruto" id="custo_bruto" step="0.01">
+                </div>
             </div>
             <br>
-            <div class="itens">
-                <label for="custo_extra">Custo de + 30% Extra (R$)</label>
-                <input type="number" name="custo_extra" id="custo_extra" step="0.01" oninput="calculateCustoPeca()">
-                <label for="custo_peca">Custo Peça (R$)</label>
-                <input type="number" name="custo_peca" id="custo_peca" readonly>
+            <div class="itens-row">
+                <div>
+                    <label for="custo_extra">Custo de + 30% Extra (R$)</label>
+                    <input type="number" name="custo_extra" id="custo_extra" step="0.01" oninput="calculateCustoPeca()">
+                </div>
+                <div>
+                    <label for="custo_peca">Custo Peça (R$)</label>
+                    <input type="number" name="custo_peca" id="custo_peca" readonly>
+                </div>
             </div>
         </div>
+        <hr>
 
 
 
         <table id="editableTable">
             <thead>
                 <tr>
-                    <th>Cortes Venda</th>
+                    <th>Nome do Corte</th>
                     <th>Peso (Kg)</th>
                     <th>% no Peso</th>
                     <th>Margem Bruta (%)</th>
                     <th>Preço Venda (R$)</th>
-                    <th>Total</th>
+                    <th>Total (R$)</th>
                     <th>% no Valor Venda</th>
                 </tr>
             </thead>
@@ -77,57 +89,65 @@
                 <!-- Rows will be added here -->
             </tbody>
         </table>
-        <button onclick="addRow()">Adicionar Linha</button>
+        <div class="row">
+            <button onclick="addRow()">Inserir Nova Linha</button>
+        </div>
+        <hr>
         
-        <div class="inputs descricao">
-            <div class="itens">
+        <div class="row ">
+            <div class="itens-row">
                 <label for="totalPeso" class="sum-div">Total Peso:</label>
                 <div id="totalPeso" class="sum-div">0</div>
             </div>
-            <div class="itens">
+            <div class="itens-row">
                 <label for="totalPercent" class="sum-div">Total % no Peso:</label>
                 <div id="totalPercent" class="sum-div">0</div>
             </div>
         </div>
 
-        <div class="inputs">
-           <div class="itens">
+        <div class="row">
+           <div class="itens-row">
                 <label for="total">Total</label>
                 <input type="number" name="total" id="total" readonly>
             </div>
-            <div  class="itens">
+            <div  class="itens-row">
                 <label for="diferenca">Diferença: compra/venda</label>
                 <input type="number" name="diferenca" id="diferenca" readonly>
             </div>
-            <div  class="itens">
+            <div  class="itens-row">
                 <label for="lucro_bruto">Lucro Bruto (%)</label>
                 <input type="number" name="lucro_bruto" id="lucro_bruto" readonly>
            </div>
         </div>
 
-        <div class="inputs">
-            <div class="itens btn-excel"> <!-- Botão para gerar relatório -->
-                <button id="downloadExcelButton" onclick="exportToExcel()">Download Relatório Excel</button>
+        <div class="row">
+           <!-- e precisar eu adiciono
+            
+            <div class="itens-row btn-csv">  Botão para gerar relatório
+                <button id="downloadExcelButton" onclick="exportToCsvo()">Download Relatório CSV</button>
             </div>
-            <div class="itens ">
+            <div class="itens-row btn-json">
                 <button id="downloadJsonButton" onclick="exportToJson()">Download Relatório JSON</button>
+            </div> 
+        -->
+            <div class="itens-row btn-excel">
+                <button id="downloadJsonButton" onclick="exportToExcel()">Download Relatório Excel</button>
             </div>
 
         </div>
-
 
     </div>
     <footer>
         <p>Produzido por T4W &copy; <span id="currentYear"></span></p>
     </footer>
                     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script src="js/main.js"></script>
- 
+     
     <script>
         // Define o ano atual no footer
         document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js" integrity="sha256-4lhPGIWv8kmCP7JRGJE4IdRod2IdQEZPui6f0uICZ6w=" crossorigin="anonymous"></script>
 </body>
 </html>

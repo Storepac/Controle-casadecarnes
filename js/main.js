@@ -100,6 +100,8 @@ function updatePercentageValue() {
 }
 
 function addRow() {
+    if (!validateInputs(true)) return;
+
     const table = document.getElementById('editableTable').getElementsByTagName('tbody')[0];
     const newRow = table.insertRow();
 
@@ -220,6 +222,109 @@ function exportToExcel() {
 }
 
 
+function exportToCsv() {
+    // Criar uma string CSV para os dados dos inputs
+    let csvData = 'Dados dos Inputs\n';
+    document.querySelectorAll('.inputs .itens').forEach(item => {
+        const label = item.querySelector('label');
+        const input = item.querySelector('input');
+        
+        if (label && input) {
+            csvData += `${label.textContent},${input.value}\n`;
+        }
+    });
+
+    // Adicionar uma linha em branco para separar os dados
+    csvData += '\n';
+
+    // Adicionar dados da tabela ao CSV
+    const table = document.querySelector('#editableTable');
+    const headers = Array.from(table.querySelectorAll('thead th')).map(th => th.textContent);
+    csvData += `${headers.join(',')}\n`;
+
+    table.querySelectorAll('tbody tr').forEach(tr => {
+        const rowData = Array.from(tr.querySelectorAll('td')).map(td => {
+            const input = td.querySelector('input');
+            return input ? input.value : td.innerText;
+        });
+        csvData += `${rowData.join(',')}\n`;
+    });
+
+    // Criar um blob com os dados CSV
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+
+    // Criar um link de download e clicá-lo automaticamente
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'relatorio_completo.csv';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function exportToExcel() {
+    const wb = XLSX.utils.book_new();
+
+    // Adicionar dados dos inputs a uma planilha
+    const inputHeaders = ['Campo', 'Valor'];
+    const inputData = [];
+    document.querySelectorAll('.inputs .itens').forEach(item => {
+        const label = item.querySelector('label');
+        const input = item.querySelector('input');
+        
+        if (label && input) {
+            inputData.push([label.textContent, input.value]);
+        }
+    });
+
+    // Incluir peso
+    const pesoPeca = document.getElementById('peso');
+    if (pesoPeca) {
+        inputData.push(['Peso da Peça (Kg)', pesoPeca.value]);
+    }
+
+    // Incluir Custo Bruto da Compra
+    const custoBruto = document.getElementById('custo_bruto');
+    if (custoBruto) {
+        inputData.push(['Custo Bruto da Compra (R$)', custoBruto.value]);
+    }
+
+    // Incluir custoPeca_30
+    const custoPeca_30 = document.getElementById('custo_extra');
+    if (custoPeca_30) {
+        inputData.push(['Custo de + 30% Extra (R$)', custoPeca_30.value]);
+    }
+
+    // Incluir custo_peca
+    const custoPeca = document.getElementById('custo_peca');
+    if (custoPeca) {
+        inputData.push(['Custo Peça (R$)', custoPeca.value]);
+    }
+
+    const wsInputs = XLSX.utils.aoa_to_sheet([inputHeaders, ...inputData]);
+    XLSX.utils.book_append_sheet(wb, wsInputs, 'Inputs');
+
+    // Adicionar dados da tabela a uma planilha
+    const table = document.querySelector('#editableTable');
+    const tableHeaders = Array.from(table.querySelectorAll('thead th')).map(th => th.textContent);
+    const tableData = [];
+
+    table.querySelectorAll('tbody tr').forEach(tr => {
+        const rowData = [];
+        tr.querySelectorAll('td').forEach(td => {
+            const input = td.querySelector('input');
+            rowData.push(input ? input.value : td.innerText);
+        });
+        tableData.push(rowData);
+    });
+
+    const wsTable = XLSX.utils.aoa_to_sheet([tableHeaders, ...tableData]);
+    XLSX.utils.book_append_sheet(wb, wsTable, 'Tabela');
+
+    // Escrever o arquivo XLSX e forçar o download
+    XLSX.writeFile(wb, 'relatorio_completo.xlsx');
+}
+
 
 
 // Função para exportar todos os dados da página para um arquivo .json
@@ -269,50 +374,19 @@ function exportToJson() {
 }
 
 
-// Função para exportar todos os dados da página para um arquivo .json
-function exportToJson() {
-    const data = {
-        inputs: {},
-        table: []
-    };
+function validateInputs() {
+    // Obter os valores dos inputs
+    const peso = document.getElementById('peso').value;
+    const custoBruto = document.getElementById('custo_bruto').value;
+    const custoExtra = document.getElementById('custo_extra').value;
 
-    // Capturar dados dos inputs
-    document.querySelectorAll('.inputs .itens').forEach(item => {
-        const label = item.querySelector('label');
-        const input = item.querySelector('input');
-        
-        if (label && input) {
-            data.inputs[label.textContent] = input.value;
-        }
-    });
-
-    // Incluir custo_peca
-    const custoPeca = document.getElementById('custo_peca');
-    if (custoPeca) {
-        data.inputs['Custo Peça'] = custoPeca.value;
+    // Verificar se algum campo está vazio
+    if (!peso || !custoBruto || !custoExtra) {
+        // Exibir mensagem de erro usando SweetAlert
+        swal.fire("Oops...", "Por favor, preencha todos os campos obrigatórios.", "error");
+        return false;
     }
-
-    // Capturar dados da tabela
-    const table = document.querySelector('#editableTable');
-    table.querySelectorAll('tbody tr').forEach(tr => {
-        const rowData = {};
-        tr.querySelectorAll('td').forEach((td, index) => {
-            const input = td.querySelector('input');
-            const cellValue = input ? input.value : td.innerText;
-            rowData[table.querySelector('thead').children[0].children[index].innerText] = cellValue;
-        });
-        data.table.push(rowData);
-    });
-
-    // Criar arquivo JSON e forçar download
-    const jsonString = JSON.stringify(data, null, 2);
-    const blob = new Blob([jsonString], { type: 'application/json' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'relatorio_completo.json';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    return true;
 }
 
 
